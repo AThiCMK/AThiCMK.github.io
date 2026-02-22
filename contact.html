@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Athisundararaj S — Contact for AI & AGI research roles."
+    />
+    <title>Contact | Athisundararaj S</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/stable.css" />
+    
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+            background: var(--grad-hero-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Contact Grid */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 36px;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* Glass Contact Card */
+        .contact-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 36px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        }
+
+        /* Contact Methods */
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all var(--transition-smooth);
+        }
+
+        .contact-method:last-child { margin-bottom: 0; }
+
+        .contact-method:hover {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(6px);
+        }
+
+        .method-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--grad-primary);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .method-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .method-label {
+            font-size: 0.72rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .method-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Material-style form */
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 400;
+            transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: var(--accent-blue);
+            box-shadow: 0 2px 0 0 var(--accent-blue);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Gradient Submit Button */
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--grad-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all var(--transition-bounce);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .submit-btn:hover::after {
+            opacity: 1;
+        }
+
+        .submit-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Status Messages */
+        .form-status {
+            text-align: center;
+            padding: 12px;
+            margin-top: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .form-status.success {
+            background-color: rgba(20, 184, 166, 0.1);
+            color: var(--accent-teal);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .form-status.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .contact-container { grid-template-columns: 1fr; }
+            .page-title { font-size: 2.5rem; letter-spacing: -1px; }
+        }
+    </style>
+  </head>
+  <body>
+
+    <nav class="stable-nav">
+        <div class="nav-brand">◈</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="portfolio.html" class="nav-link">Work</a>
+            <a href="resume.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link active">Contact</a>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Ambient Glowing Orbs -->
+        <div class="ambient-layer">
+            <div class="ambient-blob blob-1"></div>
+            <div class="ambient-blob blob-2"></div>
+            <div class="ambient-blob blob-3"></div>
+        </div>
+
+        <header class="page-header">
+            <div class="highlight-badge" style="margin-bottom: 16px;">Let's Build the Future</div>
+            <h1 class="page-title">Get in touch.</h1>
+            <p class="page-subtitle">Available for roles in AGI research and engineering.</p>
+        </header>
+
+        <div class="contact-container">
+            <div class="contact-card">
+                
+                <a href="mailto:athisundararajai@gmail.com" class="contact-method">
+                    <span class="method-icon">✉</span>
+                    <div class="method-details">
+                        <span class="method-label">Email</span>
+                        <span class="method-value">athisundararajai@gmail.com</span>
+                    </div>
+                </a>
+
+                <a href="tel:+918825833434" class="contact-method">
+                    <span class="method-icon">℡</span>
+                    <div class="method-details">
+                        <span class="method-label">Phone</span>
+                        <span class="method-value">+91 8825833434</span>
+                    </div>
+                </a>
+
+                <a href="https://linkedin.com/in/athisundararaj-s" target="_blank" class="contact-method">
+                    <span class="method-icon">in</span>
+                    <div class="method-details">
+                        <span class="method-label">LinkedIn</span>
+                        <span class="method-value">athisundararaj-s</span>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/AThiCMK" target="_blank" class="contact-method">
+                    <span class="method-icon">&lt;/&gt;</span>
+                    <div class="method-details">
+                        <span class="method-label">GitHub</span>
+                        <span class="method-value">Athisundararaj</span>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="contact-card">
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label for="userName">Name</label>
+                        <input type="text" id="userName" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" name="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="userMessage">Message</label>
+                        <textarea id="userMessage" name="message" required placeholder="What would you like to discuss?"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn"><span>Send Message</span></button>
+                    <div class="form-status" id="formStatus"></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="stable-footer">
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://github.com/AThiCMK" target="_blank" title="GitHub">&lt;/&gt;</a>
+                <a href="https://linkedin.com/in/athisundararaj-s" target="_blank" title="LinkedIn">in</a>
+            </div>
+            <p class="footer-tagline">Built with ❤️ and Neural Networks</p>
+            <p class="copyright">&copy; 2026 Athisundararaj S. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSwCaJsr7gfQd7muJUyExjPT1TJcpXjuo",
+            authDomain: "portfolio-60ff1.firebaseapp.com",
+            databaseURL: "https://portfolio-60ff1-default-rtdb.firebaseio.com",
+            projectId: "portfolio-60ff1",
+            storageBucket: "portfolio-60ff1.appspot.com",
+            messagingSenderId: "456295071037",
+            appId: "1:456295071037:web:3e67cfb1a6c789b09ad2e8"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- Form Submission ---
+        document.getElementById('messageForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const statusEl = document.getElementById('formStatus');
+
+            submitBtn.disabled = true;
+            submitBtn.querySelector('span').textContent = 'Transmitting...';
+
+            const data = {
+                name: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value,
+                message: document.getElementById('userMessage').value,
+                timestamp: new Date().toISOString()
+            };
+
+            db.ref('messages').push(data)
+                .then(() => {
+                    statusEl.textContent = 'Message sent successfully. I will be in touch shortly.';
+                    statusEl.className = 'form-status success';
+                    this.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('span').textContent = 'Send Message';
+
+                    setTimeout(() => { statusEl.textContent = ''; statusEl.className = 'form-status'; }, 5000);
+                })
+                .catch((err) => {
+                    statusEl.textContent = 'Failed to send message. Please try again.';
+                    statusEl.className = 'form-status error';
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('span').textContent = 'Send Message';
+                });
+        });
+
+        // Theme Toggle
+        function initTheme() {
+            const saved = localStorage.getItem('stable-theme');
+            const theme = saved || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            updateToggleIcon(theme);
+        }
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('stable-theme', next);
+            updateToggleIcon(next);
+        }
+        function updateToggleIcon(theme) {
+            const btn = document.querySelector('.theme-toggle');
+            if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        initTheme();
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+    </script>
+
+  </body>
+</html>

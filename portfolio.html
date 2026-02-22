@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Athisundararaj S — AI Evangelist. Professional Portfolio."
+    />
+    <title>Work | Athisundararaj S</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/stable.css" />
+    
+    <style>
+        .page-header {
+            margin-bottom: 60px;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+            background: var(--grad-hero-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Project Grid */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* Featured card spans full width */
+        .project-card.featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .project-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 36px;
+            transition: all var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top shine line */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        }
+
+        /* Color accent strip */
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 0 4px 4px 0;
+            opacity: 0.7;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .project-card[data-domain="nlp"]::after { background: var(--grad-primary); }
+        .project-card[data-domain="cv"]::after { background: linear-gradient(180deg, #8b5cf6, #6d28d9); }
+        .project-card[data-domain="medical"]::after { background: linear-gradient(180deg, #3b82f6, #14b8a6); }
+        .project-card[data-domain="edge"]::after { background: linear-gradient(180deg, #14b8a6, #06b6d4); }
+        .project-card[data-domain="iot"]::after { background: linear-gradient(180deg, #ec4899, #f97316); }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(59, 130, 246, 0.2);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Project number watermark */
+        .project-number {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            font-family: var(--font-mono);
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.03);
+            letter-spacing: -4px;
+            line-height: 1;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            transition: color 0.3s ease;
+        }
+        
+        .project-card:hover .project-title {
+            color: var(--accent-blue);
+        }
+
+        .project-meta {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            line-height: 1.65;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .metrics-list {
+            margin-bottom: 28px;
+            padding-left: 18px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .metrics-list li {
+            margin-bottom: 6px;
+        }
+        
+        .metrics-list li::marker {
+            color: var(--accent-blue);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-tag {
+            background: rgba(59, 130, 246, 0.08);
+            color: var(--text-secondary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .tech-tag {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            border-color: rgba(59, 130, 246, 0.25);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 992px) {
+            .project-card.featured { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            .page-title { font-size: 2.5rem; letter-spacing: -1px; }
+        }
+    </style>
+  </head>
+  <body>
+
+    <nav class="stable-nav">
+        <div class="nav-brand">◈</div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="portfolio.html" class="nav-link active">Work</a>
+            <a href="resume.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Ambient Glowing Orbs -->
+        <div class="ambient-layer">
+            <div class="ambient-blob blob-1"></div>
+            <div class="ambient-blob blob-2"></div>
+            <div class="ambient-blob blob-3"></div>
+        </div>
+
+        <header class="page-header">
+            <div class="highlight-badge" style="margin-bottom: 16px;">Selected Works</div>
+            <h1 class="page-title">Systems Built</h1>
+            <p class="page-subtitle">Production deployments & architecture research.</p>
+        </header>
+
+        <div class="grid-layout">
+            
+            <!-- FEATURED: Project 1 -->
+            <a href="https://github.com/AThiCMK/Lyra-AI-Personalised-Platform-to-learn-English" target="_blank" class="project-card featured" data-domain="nlp">
+                <span class="project-number">01</span>
+                <div>
+                    <div class="project-header">
+                        <div>
+                            <h2 class="project-title">LYRA AI</h2>
+                            <span class="project-meta">NLP / Education</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">
+                        A personalized English learning platform powered by LLMs with adaptive feedback. Integrated a Llama 3.1 backbone with a Django serving layer and optimized ASR pipeline for sub-second feedback loops.
+                    </p>
+                </div>
+                <div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">LLMs</span>
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">Speech AI</span>
+                        <span class="tech-tag">Llama-cpp</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Project 2 -->
+            <a href="https://github.com/AThiCMK/VidhyaGPT-Personalized-Student-s-mentor" target="_blank" class="project-card" data-domain="nlp">
+                <span class="project-number">02</span>
+                <div class="project-header">
+                    <div>
+                        <h2 class="project-title">VIDHYAGPT</h2>
+                        <span class="project-meta">NLP / Bilingual</span>
+                    </div>
+                </div>
+                <p class="project-desc">
+                    A bilingual learning assistant capable of real-time English-Hindi speech processing. Fine-tuned Whisper AI for code-mixed recognition and utilized specialized prompting on a Llama 3.1 8B backbone.
+                </p>
+                <ul class="metrics-list">
+                    <li>86% ASR accuracy on code-mixed speech</li>
+                    <li>Real-time EN-HI translation</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Whisper AI</span>
+                    <span class="tech-tag">Llama-cpp</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+            </a>
+
+            <!-- Project 3 -->
+            <a href="https://github.com/srisivaram11/Etta" target="_blank" class="project-card" data-domain="medical">
+                <span class="project-number">03</span>
+                <div class="project-header">
+                    <div>
+                        <h2 class="project-title">ETTA</h2>
+                        <span class="project-meta">Medical AI / NLP</span>
+                    </div>
+                </div>
+                <p class="project-desc">
+                    A clinical review workflow tool that analyzes medical documents at scale. Deployed a ChromaDB-based RAG pipeline and fine-tuned transformers to significantly reduce hallucination on long documents.
+                </p>
+                <ul class="metrics-list">
+                    <li>77% precision across medical literature</li>
+                    <li>40% review time reduction</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">RAG Architecture</span>
+                    <span class="tech-tag">Llama-cpp</span>
+                    <span class="tech-tag">ChromaDB</span>
+                </div>
+            </a>
+
+            <!-- Project 4 -->
+            <a href="https://github.com/AThiCMK" target="_blank" class="project-card" data-domain="cv">
+                <span class="project-number">04</span>
+                <div class="project-header">
+                    <div>
+                        <h2 class="project-title">ALPR India</h2>
+                        <span class="project-meta">Computer Vision</span>
+                    </div>
+                </div>
+                <p class="project-desc">
+                    Automated License Plate Recognition system adapted for varied Indian plate formats. Built a custom DeepStream pipeline executing highly optimized TensorRT models for real-time processing.
+                </p>
+                <ul class="metrics-list">
+                    <li>96% accuracy at 0.08s/image</li>
+                    <li>15,000+ images processed daily</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">DeepStream SDK</span>
+                    <span class="tech-tag">TensorRT</span>
+                    <span class="tech-tag">Flask</span>
+                </div>
+            </a>
+
+            <!-- Project 5 -->
+            <a href="https://github.com/AThiCMK" target="_blank" class="project-card" data-domain="edge">
+                <span class="project-number">05</span>
+                <div class="project-header">
+                    <div>
+                        <h2 class="project-title">Surveillance Edge Systems</h2>
+                        <span class="project-meta">Computer Vision / Edge AI</span>
+                    </div>
+                </div>
+                <p class="project-desc">
+                    Real-time multi-person tracking deployed natively on Jetson devices, effectively handling peak crowd densities without incurring massive GPU server costs.
+                </p>
+                <ul class="metrics-list">
+                    <li>20-person real-time tracking</li>
+                    <li>30% hardware cost reduction</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">CNNs</span>
+                    <span class="tech-tag">Edge AI</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+            </a>
+
+            <!-- Project 6 -->
+            <a href="https://github.com/sriharish-324/Tinnitus_Masking_Device" target="_blank" class="project-card" data-domain="iot">
+                <span class="project-number">06</span>
+                <div class="project-header">
+                    <div>
+                        <h2 class="project-title">Tinnitus Masking Device</h2>
+                        <span class="project-meta">Healthcare / IoT</span>
+                    </div>
+                </div>
+                <p class="project-desc">
+                    A personalized sound therapy wearable driven by real-time pulse and galvanic biometric data to counteract tinnitus. Utilized Firebase analytics and 8D immersive tones.
+                </p>
+                <ul class="metrics-list">
+                    <li>SIH 2023 Winner</li>
+                    <li>95% predicted therapy effectiveness</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Raspberry Pi</span>
+                    <span class="tech-tag">IoT</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Machine Learning</span>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="stable-footer">
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://github.com/AThiCMK" target="_blank" title="GitHub">&lt;/&gt;</a>
+                <a href="https://linkedin.com/in/athisundararaj-s" target="_blank" title="LinkedIn">in</a>
+            </div>
+            <p class="footer-tagline">Built with ❤️ and Neural Networks</p>
+            <p class="copyright">&copy; 2026 Athisundararaj S. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function initTheme() {
+            const saved = localStorage.getItem('stable-theme');
+            const theme = saved || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            updateToggleIcon(theme);
+        }
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('stable-theme', next);
+            updateToggleIcon(next);
+        }
+        function updateToggleIcon(theme) {
+            const btn = document.querySelector('.theme-toggle');
+            if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        initTheme();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+    </script>
+
+  </body>
+</html>
