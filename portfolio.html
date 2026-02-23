@@ -223,7 +223,8 @@
 
     <nav class="stable-nav">
         <div class="nav-brand">◈</div>
-        <div class="nav-links">
+        <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">☰</button>
+        <div class="nav-links" id="navLinks">
             <a href="index.html" class="nav-link">Home</a>
             <a href="portfolio.html" class="nav-link active">Work</a>
             <a href="resume.html" class="nav-link">About</a>
@@ -403,6 +404,14 @@
     </footer>
 
     <script>
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('open');
+        }
+        document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('open');
+        }));
+
         // Theme Toggle
         function initTheme() {
             const saved = localStorage.getItem('stable-theme');
