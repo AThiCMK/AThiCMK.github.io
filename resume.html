@@ -44,6 +44,19 @@
             opacity: 0;
         }
 
+        .mobile-only-btn {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .mobile-only-btn {
+                display: inline-flex;
+            }
+            .side-column .download-btn {
+                display: none !important;
+            }
+        }
+
         .section-title {
             font-size: 1.2rem;
             color: var(--text-primary);
@@ -66,6 +79,7 @@
         .timeline-container {
             position: relative;
             padding-left: 32px;
+            margin-left: 12px;
             border-left: 2px solid rgba(59, 130, 246, 0.15);
             margin-bottom: 56px;
             background-image: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, transparent 100%);
@@ -242,7 +256,25 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .resume-container {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 60px;
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            opacity: 0;
+        }
+
+        .mobile-only-btn {
+            display: none;
+        }
+
         @media (max-width: 900px) {
+            .mobile-only-btn {
+                display: inline-flex;
+            }
+            .side-column .download-btn {
+                display: none !important;
+            }
             .resume-container {
                 grid-template-columns: 1fr;
             }
@@ -264,6 +296,19 @@
         </div>
     </nav>
 
+    <!-- Full-screen mobile nav overlay -->
+    <div class="mobile-nav-overlay" id="mobileNav">
+        <button class="mobile-nav-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="portfolio.html" class="mobile-nav-link">Work</a>
+        <a href="resume.html" class="mobile-nav-link active">About</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        <div class="mobile-nav-theme-row">
+            <span>Theme</span>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+        </div>
+    </div>
+
     <main class="container">
         <!-- Ambient Glowing Orbs -->
         <div class="ambient-layer">
@@ -275,6 +320,9 @@
         <header class="page-header">
             <h1 class="page-title">Curriculum Vitae</h1>
             <p class="page-subtitle">Athisundararaj S. — ML Engineer</p>
+            <a href="assets/resume.pdf" download="Athisundararaj_Resume.pdf" class="download-btn mobile-only-btn" style="margin-top: 24px;">
+                Download Resume PDF ↓
+            </a>
         </header>
 
         <div class="resume-container">
@@ -419,12 +467,16 @@
 
     <script>
         function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.toggle('open');
+            const overlay = document.getElementById('mobileNav');
+            const isOpen = overlay.classList.toggle('open');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         }
-        document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
-            document.getElementById('navLinks').classList.remove('open');
-        }));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                const o = document.getElementById('mobileNav');
+                if (o.classList.contains('open')) toggleMenu();
+            }
+        });
 
         // Theme Toggle
         function initTheme() {
@@ -441,8 +493,9 @@
             updateToggleIcon(next);
         }
         function updateToggleIcon(theme) {
-            const btn = document.querySelector('.theme-toggle');
-            if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+            document.querySelectorAll('.theme-toggle').forEach(btn => {
+                btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+            });
         }
         initTheme();
 

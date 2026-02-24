@@ -572,181 +572,228 @@ html[data-theme="light"] {
     background-color: #f0f4f8;
 }
 
-/* ============================================
-   MOBILE RESPONSIVE
-   ============================================ */
+/* ============================================================
+   INDUSTRY-STANDARD MOBILE ARCHITECTURE
+   — All rules below are strictly mobile-scoped.
+   — Desktop CSS above this line is never modified.
+   ============================================================ */
 
-/* --- Tablet (≤900px) --- */
+/* ─── ❶ FLUID TYPOGRAPHY ─────────────────────────────────────
+   clamp(min, preferred, max) scales smoothly on every screen.
+   No hard breakpoint jumps. Works from 320px to 4K.
+──────────────────────────────────────────────────────────── */
+.page-title {
+    font-size: clamp(1.9rem, 5vw + 0.5rem, 3.5rem);
+    letter-spacing: clamp(-0.5px, -0.04em, -2px);
+}
+.page-subtitle {
+    font-size: clamp(0.95rem, 2vw + 0.5rem, 1.25rem);
+}
+
+/* ─── ❷ HOVER EFFECTS — pointer-device only ─────────────────
+   These fire ONLY when a real mouse/trackpad is present.
+   Touch devices (iOS, Android) are completely excluded.
+──────────────────────────────────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+    .glass-card:hover {
+        border-color: rgba(59, 130, 246, 0.2);
+        box-shadow: var(--shadow-lg), var(--shadow-glow);
+        transform: translateY(-4px);
+    }
+    .project-card:hover {
+        border-color: rgba(59, 130, 246, 0.25);
+        box-shadow: var(--shadow-lg), var(--shadow-glow);
+        transform: translateY(-4px);
+    }
+    .stat-item:hover     { transform: translateY(-2px); }
+    .contact-method:hover {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: rgba(59, 130, 246, 0.2);
+        transform: translateX(6px);
+    }
+    .timeline-item:hover { transform: translateX(5px); }
+}
+
+/* ─── ❸ DESKTOP: hamburger hidden ───────────────────────────
+   Always hidden by default; shown only on mobile via breakpoint
+──────────────────────────────────────────────────────────── */
+.nav-hamburger { display: none; }
+
+/* ─── ❹ MOBILE NAV OVERLAY ──────────────────────────────────
+   Full-screen, blurred glass panel. Premium app-like UX.
+──────────────────────────────────────────────────────────── */
+.mobile-nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 9, 24, 0.97);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    /* Hidden by default — opacity + pointer-events, NOT display,
+       so CSS transitions work correctly */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.mobile-nav-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.mobile-nav-close:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--text-primary);
+}
+
+.mobile-nav-link {
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: var(--text-secondary);
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 50%;
+    height: 2px;
+    background: var(--grad-primary);
+    border-radius: 2px;
+    transition: transform 0.25s ease;
+}
+
+.mobile-nav-link:hover { color: var(--text-primary); }
+
+.mobile-nav-link.active {
+    color: var(--text-primary);
+}
+
+.mobile-nav-link.active::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.mobile-nav-theme-row {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ─── ❺ TABLET BREAKPOINT (≤900px) ──────────────────────────
+   Layout reflows: multi-column grids become single-column.
+   Natural DOM order is preserved (no order hacks).
+──────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
     .container {
-        padding-top: 110px;
+        padding-top: 100px;
         padding-left: 20px;
         padding-right: 20px;
     }
 
-    .glass-card {
-        padding: 28px;
-    }
+    .glass-card { padding: 28px; }
 
-    .stable-nav {
-        padding: 14px 20px;
-    }
-}
-
-/* --- Mobile Nav: compress link text, tighten gap --- */
-@media (max-width: 720px) {
-    .stable-nav {
-        padding: 12px 16px;
-    }
-
-    .nav-links {
-        gap: 16px;
-    }
-
-    .nav-link {
-        font-size: 0.82rem;
-    }
-
-    .theme-toggle {
-        width: 36px;
-        height: 36px;
-        font-size: 0.95rem;
-    }
-}
-
-/* --- Small Mobile (≤500px): hide nav links, show hamburger toggle --- */
-@media (max-width: 500px) {
-    .stable-nav {
-        padding: 12px 16px;
-        flex-wrap: wrap;
-        gap: 0;
-    }
-
-    /* Hide text links — keep only brand + theme toggle visible */
-    .nav-links {
-        order: 3;
-        width: 100%;
-        overflow: hidden;
-        max-height: 0;
-        flex-direction: column;
-        gap: 0;
-        transition: max-height 0.35s cubic-bezier(0.25, 0, 0, 1),
-                    padding 0.3s ease;
-        padding: 0 4px;
-    }
-
-    .nav-links.open {
-        max-height: 300px;
-        padding: 12px 4px;
-        gap: 4px;
-    }
-
-    .nav-link {
-        padding: 10px 8px;
-        font-size: 0.9rem;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-
-    /* Theme toggle doubles as hamburger hint */
-    .nav-brand { flex-grow: 1; }
-
-    /* Hamburger button — appears only on mobile */
-    .nav-hamburger {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        background: var(--bg-tertiary);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 1rem;
-        color: var(--text-secondary);
-        margin-right: 8px;
-        flex-shrink: 0;
-    }
-
-    .container {
-        padding-top: 100px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .glass-card {
-        padding: 20px;
-    }
-}
-
-/* Hide hamburger on desktop */
-.nav-hamburger { display: none; }
-
-/* --- Shared page-title scaling --- */
-@media (max-width: 768px) {
-    .page-title {
-        font-size: 2.2rem !important;
-        letter-spacing: -1px !important;
-    }
-
-    .page-subtitle {
-        font-size: 1rem !important;
-    }
-}
-
-@media (max-width: 500px) {
-    .page-title {
-        font-size: 1.8rem !important;
-        letter-spacing: -0.5px !important;
-    }
-}
-
-/* --- Resume: stack 2-col layout --- */
-@media (max-width: 900px) {
+    /* Resume: stack 2-col layout — main-col first (natural order) */
     .resume-container {
+        display: grid !important;
         grid-template-columns: 1fr !important;
         gap: 40px !important;
     }
 
-    .side-column {
-        order: -1; /* Download button & skills appear above timeline on mobile */
-    }
-}
-
-/* --- Contact: stack 2-col layout --- */
-@media (max-width: 768px) {
+    /* Contact: stack the two panels */
     .contact-container {
         grid-template-columns: 1fr !important;
         gap: 24px !important;
     }
 }
 
-/* --- Skills grid --- */
+/* ─── ❻ MOBILE BREAKPOINT (≤768px) ──────────────────────────
+   Show hamburger, hide desktop nav links, tighten spacing.
+──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
+
+    /* Hamburger: revealed on mobile */
+    .nav-hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--bg-tertiary);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        flex-shrink: 0;
+        transition: background 0.2s ease;
+    }
+
+    .nav-hamburger:hover { background: rgba(59, 130, 246, 0.15); }
+
+    /* Desktop nav links: hidden on mobile (lives in overlay now) */
+    .nav-links { display: none; }
+
+    .container {
+        padding-top: 80px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .glass-card { padding: 20px; }
+
+    /* Skills grid: 2 cols on tablet, adapts nicely */
     .skills-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(2, 1fr) !important;
     }
+
+    .stable-footer { padding: 48px 16px; }
+    .footer-social { gap: 10px; flex-wrap: wrap; }
 }
 
-/* --- Disable lift hover on touch (prevents sticky hover state) --- */
-@media (hover: none) {
-    .glass-card:hover,
-    .project-card:hover,
-    .stat-item:hover,
-    .contact-method:hover,
-    .timeline-item:hover {
-        transform: none;
-        box-shadow: var(--shadow-md);
-    }
-}
-
-/* --- Footer mobile --- */
-@media (max-width: 500px) {
-    .stable-footer {
-        padding: 40px 16px;
+/* ─── ❼ SMALL MOBILE (≤480px) ───────────────────────────────
+   Fine-tune: expand content edge to edge, single-col skills.
+──────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .container {
+        padding-left: 14px;
+        padding-right: 14px;
     }
 
-    .footer-social {
-        gap: 10px;
-        flex-wrap: wrap;
-    }
+    .glass-card { padding: 16px; }
+
+    .skills-grid { grid-template-columns: 1fr !important; }
 }
